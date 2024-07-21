@@ -1,21 +1,23 @@
 
+using GoldAPIGateway.BusinessLogics;
+using GoldAPIGateway.BusinessLogics.IBusinessLogics;
+
 namespace GoldAPIGateway
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-            // Add services to the container.
+            WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var app = builder.Build();
+            builder.Services.AddScoped<ISMTP, SMTP>();
 
-            // Configure the HTTP request pipeline.
+            WebApplication? app = builder.Build();
+
             if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
             {
                 app.UseSwagger();
