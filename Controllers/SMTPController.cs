@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GoldAPIGateway.Controllers
 {
     [ApiController]
-    [GoldAuthorize]
+    //[GoldAuthorize]
     [Route("api/[controller]")]
     public class SMTPController : ControllerBase
     {
