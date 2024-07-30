@@ -1,4 +1,5 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
+using GoldAPIGateway.Errors;
 using GoldAPIGateway.Models;
 using GoldHelpers.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,9 @@ namespace GoldAPIGateway.Controllers
     [Route("api/[controller]")]
     public class SMTPController : ControllerBase
     {
-        private readonly ILogger<SMTPController> _logger;
         private readonly ISMTP _smtp;
+        private readonly ILogger<SMTPController> _logger;
+
         public SMTPController(ILogger<SMTPController> logger, ISMTP smtp)
         {
             _logger = logger;
@@ -27,7 +29,7 @@ namespace GoldAPIGateway.Controllers
             {
                 messageId = await _smtp.SendOTPSMS(otpSMS.Mobile, otpSMS.OTP);
             }
-            return Ok(messageId);
+            return Ok(new ApiResponse(data: messageId));
         }
 
 
@@ -40,7 +42,7 @@ namespace GoldAPIGateway.Controllers
             {
                 messageIds = await _smtp.SendSMS(sms.Mobiles, sms.Message);
             }
-            return Ok(messageIds);
+            return Ok(new ApiResponse(data: messageIds));
         }
     }
 }
