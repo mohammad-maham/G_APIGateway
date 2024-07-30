@@ -14,6 +14,7 @@ namespace GoldAPIGateway
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddScoped<IPrices, Prices>();
             builder.Services.AddScoped<ISMTP, SMTP>();
 
             WebApplication? app = builder.Build();
