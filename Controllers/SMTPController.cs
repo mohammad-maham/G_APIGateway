@@ -1,11 +1,13 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
 using GoldAPIGateway.Models;
+using GoldHelpers.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoldAPIGateway.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [GoldAuthorize]
+    [Route("api/[controller]")]
     public class SMTPController : ControllerBase
     {
         private readonly ILogger<SMTPController> _logger;
