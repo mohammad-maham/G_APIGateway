@@ -47,7 +47,7 @@ namespace GoldAPIGateway.Models
         public long CurrentPrice { get; set; }
 
         [JsonProperty("تغییر")]
-        public long SwappPercentage { get; set; }
+        public string? SwappPercentage { get; set; }
 
         [JsonProperty("بیشترین")]
         public long Highest { get; set; }
