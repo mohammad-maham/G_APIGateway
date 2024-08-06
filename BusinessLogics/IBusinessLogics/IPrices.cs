@@ -2,6 +2,6 @@
 {
     public interface IPrices
     {
-        Task<double> GetGoldOnlinePriceAsync();
+        double GetGoldOnlinePrice();
     }
 }

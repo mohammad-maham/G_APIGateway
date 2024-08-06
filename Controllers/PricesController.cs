@@ -19,9 +19,9 @@ namespace GoldAPIGateway.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> GetGoldOnlinePrice()
+        public IActionResult GetGoldOnlinePrice()
         {
-            double price = await _prices.GetGoldOnlinePriceAsync();
+            double price = _prices.GetGoldOnlinePrice();
             return Ok(new ApiResponse(data: price.ToString()));
         }
     }

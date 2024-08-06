@@ -17,7 +17,7 @@ namespace GoldAPIGateway.BusinessLogics
             _config = config;
         }
 
-        public async Task<double> GetGoldOnlinePriceAsync()
+        public double GetGoldOnlinePrice()
         {
             double onlinePrice = 0.0;
             IConfigurationSection? configs = _config.GetSection("ApiUrls");
@@ -35,7 +35,7 @@ namespace GoldAPIGateway.BusinessLogics
                 request.AddHeader("content-type", "application/json");
 
                 // Send SMS
-                RestResponse response = await client.ExecuteGetAsync(request);
+                RestResponse response = client.ExecuteGet(request);
 
                 // Check Response
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))

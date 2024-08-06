@@ -15,34 +15,34 @@ namespace GoldAPIGateway.BusinessLogics
             _config = config;
         }
 
-        public async Task<string> SendOTPSMS(string Mobile, string OTP)
+        public string SendOTPSMS(string Mobile, string OTP)
         {
             IConfigurationSection? configs = _config.GetSection("SMSSettings");
             int templateId = configs.GetValue<int>("templateId");
             string api_key = configs.GetValue<string>("key")!;
             SmsIr smsIr = new(api_key);
             VerifySendParameter[] verifySendParameters = { new("OTP", OTP) };
-            SmsIrResult<VerifySendResult> response = await smsIr.VerifySendAsync(Mobile, templateId, verifySendParameters);
+            SmsIrResult<VerifySendResult> response = smsIr.VerifySend(Mobile, templateId, verifySendParameters);
             VerifySendResult sendResult = response.Data;
             int messageId = sendResult.MessageId;
             decimal cost = sendResult.Cost;
-            _logger.LogInformation($"OTP msgId: {messageId.ToString()}");
+            _logger.LogInformation($"OTP msgId: {messageId}");
             return messageId.ToString();
         }
 
-        public async Task<string> SendSMS(string[] Mobiles, string Message)
+        public string SendSMS(string[] Mobiles, string Message)
         {
             IConfigurationSection? configs = _config.GetSection("SMSSettings");
             string api_key = configs.GetValue<string>("key")!;
             long lineNumber = configs.GetValue<long>("linenumber")!;
             SmsIr smsIr = new(api_key);
             int? sendDateTime = null; // unix time - for instance: 1704094200
-            SmsIrResult<SendResult> response = await smsIr.BulkSendAsync(lineNumber, Message, Mobiles, sendDateTime);
+            SmsIrResult<SendResult> response = smsIr.BulkSend(lineNumber, Message, Mobiles, sendDateTime);
             SendResult sendResult = response.Data;
             Guid packId = sendResult.PackId;
             int?[] messageIds = sendResult.MessageIds;
             decimal cost = sendResult.Cost;
-            _logger.LogInformation($"SMS msgId: {messageIds.ToString()}");
+            _logger.LogInformation($"SMS msgId: {messageIds}");
             return messageIds.ToArray().ToString();
         }
     }

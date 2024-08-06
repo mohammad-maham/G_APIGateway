@@ -2,7 +2,7 @@
 {
     public interface ISMTP
     {
-        Task<string> SendOTPSMS(string Mobile, string OTP);
-        Task<string> SendSMS(string[] Mobiles, string Message);
+        string SendOTPSMS(string Mobile, string OTP);
+        string SendSMS(string[] Mobiles, string Message);
     }
 }
