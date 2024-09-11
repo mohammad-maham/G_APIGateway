@@ -47,6 +47,7 @@ namespace GoldAPIGateway
             });
             builder.Services.AddScoped<IPrices, Prices>();
             builder.Services.AddScoped<ISMTP, SMTP>();
+            builder.Services.AddScoped<IAuthorization, Authorization>();
 
             WebApplication? app = builder.Build();
 
