@@ -23,10 +23,12 @@ namespace GoldAPIGateway.BusinessLogics
             IConfigurationSection? configs = _config.GetSection("ApiUrls");
             string host = configs.GetValue<string>("Authorizations")!;
             string token = _config.GetSection("Tokens").GetValue<string>("MobileAuthorization")!;
+            string port = configs.GetValue<string>("Port1")!;
+
             try
             {
                 // BaseURL
-                RestClient client = new(host);
+                RestClient client = new($"{host}/{port}");
                 RestRequest request = new()
                 {
                     Method = Method.Get
@@ -43,34 +45,80 @@ namespace GoldAPIGateway.BusinessLogics
                 // Check Response
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
                 {
-                    AuthorizationVM apiResponse = JsonConvert.DeserializeObject<AuthorizationVM>(response.Content)!;
+                    MobileAuth apiResponse = JsonConvert.DeserializeObject<MobileAuth>(response.Content)!;
                     if (apiResponse != null && apiResponse.Result != null)
                     {
-                        AuthResult? apiDATA = apiResponse.Result;
+                        UserMobileAuthVM? apiDATA = apiResponse.Result;
                         if (apiDATA != null)
                         {
-                            isOk = apiDATA.Mobile && apiDATA.NationalId;
+                            isOk = apiDATA.Validation!.Value
+                                && !string.IsNullOrEmpty(apiDATA.Detail)
+                                && apiDATA.Detail == "شماره موبایل با کد ملی مطابقت دارد";
                         }
                     }
                 }
             }
             catch (Exception)
             {
-                throw;
+                return isOk = false;
             }
             return isOk;
         }
 
-        public bool IsValidateUserInfo(UserInfoAuthVM infoAuthVM)
+        public LegalUserAuthResult? ValidateLegalUserInfo(LegalUserInfoAuthVM infoAuthVM)
+        {
+            LegalUserAuthResult result = new();
+
+            IConfigurationSection? configs = _config.GetSection("ApiUrls");
+            string host = configs.GetValue<string>("Authorizations")!;
+            string token = _config.GetSection("Tokens").GetValue<string>("MobileAuthorization")!;
+            string port = configs.GetValue<string>("Port2")!;
+
+            try
+            {
+                // BaseURL
+                RestClient client = new($"{host}/{port}");
+                RestRequest request = new()
+                {
+                    Method = Method.Get
+                };
+
+                // Parameters
+                request.AddParameter("Token", token);
+                request.AddParameter("IdCode", infoAuthVM.NationalCode);
+
+                // Send SMS
+                RestResponse response = client.ExecuteGet(request);
+
+                // Check Response
+                if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
+                {
+                    LegalUserAuth apiResponse = JsonConvert.DeserializeObject<LegalUserAuth>(response.Content)!;
+                    if (apiResponse != null && apiResponse.Result != null)
+                    {
+                        result = apiResponse.Result;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+            return result;
+        }
+
+        public bool ValidateRealUserInfo(RealUserInfoAuthVM infoAuthVM)
         {
             bool isOk = false;
             IConfigurationSection? configs = _config.GetSection("ApiUrls");
             string host = configs.GetValue<string>("Authorizations")!;
             string token = _config.GetSection("Tokens").GetValue<string>("MobileAuthorization")!;
+            string port = configs.GetValue<string>("Port1")!;
+
             try
             {
                 // BaseURL
-                RestClient client = new(host);
+                RestClient client = new($"{host}/{port}");
                 RestRequest request = new()
                 {
                     Method = Method.Get
@@ -85,27 +133,22 @@ namespace GoldAPIGateway.BusinessLogics
                 request.AddParameter("BirthDate", infoAuthVM.BirthDate);
                 request.AddParameter("NationalId", infoAuthVM.NationalId);
 
-
                 // Send SMS
                 RestResponse response = client.ExecuteGet(request);
 
                 // Check Response
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
                 {
-                    AuthorizationVM apiResponse = JsonConvert.DeserializeObject<AuthorizationVM>(response.Content)!;
+                    RealUserAuth apiResponse = JsonConvert.DeserializeObject<RealUserAuth>(response.Content)!;
                     if (apiResponse != null && apiResponse.Result != null)
                     {
-                        AuthResult? apiDATA = apiResponse.Result;
-                        if (apiDATA != null)
-                        {
-                            isOk = apiDATA.Mobile && apiDATA.NationalId && apiDATA.IdCode && apiDATA.Family && apiDATA.Name;
-                        }
+                        RealUserAuthResult? apiDATA = apiResponse.Result;
                     }
                 }
             }
             catch (Exception)
             {
-                throw;
+                return isOk = false;
             }
             return isOk;
         }

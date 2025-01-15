@@ -2,6 +2,7 @@
 using GoldAPIGateway.Errors;
 using GoldAPIGateway.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace GoldAPIGateway.Controllers
 {
@@ -32,12 +33,26 @@ namespace GoldAPIGateway.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult GetValidateUserInfo([FromBody] UserInfoAuthVM infoAuthVM)
+        public IActionResult GetValidateRealUserInfo([FromBody] RealUserInfoAuthVM infoAuthVM)
         {
             if (infoAuthVM != null)
             {
-                bool isOk = _auth.IsValidateUserInfo(infoAuthVM);
+                bool isOk = _auth.ValidateRealUserInfo(infoAuthVM);
                 return Ok(new ApiResponse(data: isOk.ToString().ToLower()));
+            }
+            return BadRequest(new ApiResponse(400));
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult GetValidateLegalUserInfo([FromBody] LegalUserInfoAuthVM infoAuthVM)
+        {
+            if (infoAuthVM != null)
+            {
+                LegalUserAuthResult? result = _auth.ValidateLegalUserInfo(infoAuthVM);
+                string jsonData = JsonConvert.SerializeObject(result);
+                if (result != null && !string.IsNullOrEmpty(result.NationalId))
+                    return Ok(new ApiResponse(data: jsonData));
             }
             return BadRequest(new ApiResponse(400));
         }
