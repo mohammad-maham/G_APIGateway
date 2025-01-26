@@ -41,12 +41,12 @@ namespace GoldAPIGateway.BusinessLogics
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
                 {
                     GoldOnlinePriceApi apiResponse = JsonConvert.DeserializeObject<GoldOnlinePriceApi>(response.Content)!;
-                    if (apiResponse != null && apiResponse.Result != null && apiResponse.Result.Data?.Count > 0)
+                    if (apiResponse != null && apiResponse.geram18 != null && apiResponse.geram18.value>0)
                     {
-                        GoldOnlinePriceApiData? apiDATA = apiResponse.Result.Data.FirstOrDefault();
+                        Geram18? apiDATA = apiResponse.geram18;
                         if (apiDATA != null)
                         {
-                            onlinePrice = apiDATA.CurrentPrice;
+                            onlinePrice = (double)apiDATA.value;
                         }
                     }
                 }
