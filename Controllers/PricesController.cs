@@ -24,5 +24,29 @@ namespace GoldAPIGateway.Controllers
             double price = _prices.GetGoldOnlinePrice();
             return Ok(new ApiResponse(data: price.ToString()));
         }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult GetDollarOnlinePrice()
+        {
+            double price = _prices.GetGoldOnlinePrice();
+            return Ok(new ApiResponse(data: price.ToString()));
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult GetSilverOnlinePrice()
+        {
+            double price = _prices.GetGoldOnlinePrice();
+            return Ok(new ApiResponse(data: price.ToString()));
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult GetTetherOnlinePrice()
+        {
+            double price = _prices.GetGoldOnlinePrice();
+            return Ok(new ApiResponse(data: price.ToString()));
+        }
     }
 }

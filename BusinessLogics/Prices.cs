@@ -17,6 +17,11 @@ namespace GoldAPIGateway.BusinessLogics
             _config = config;
         }
 
+        public double GetDollarOnlinePrice()
+        {
+            throw new NotImplementedException();
+        }
+
         public double GetGoldOnlinePrice()
         {
             double onlinePrice = 0.0;
@@ -56,6 +61,16 @@ namespace GoldAPIGateway.BusinessLogics
                 throw;
             }
             return onlinePrice;
+        }
+
+        public double GetSilverOnlinePrice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetTetherOnlinePrice()
+        {
+            throw new NotImplementedException();
         }
     }
 }

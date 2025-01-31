@@ -3,5 +3,8 @@
     public interface IPrices
     {
         double GetGoldOnlinePrice();
+        double GetSilverOnlinePrice();
+        double GetDollarOnlinePrice();
+        double GetTetherOnlinePrice();
     }
 }
