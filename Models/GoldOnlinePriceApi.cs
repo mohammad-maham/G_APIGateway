@@ -409,7 +409,4 @@ namespace GoldAPIGateway.Models
         [JsonPropertyName("serverTime")]
         public required string serverTime { get; set; }
     }
-
-
-
 }

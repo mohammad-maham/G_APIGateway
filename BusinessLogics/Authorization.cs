@@ -45,10 +45,10 @@ namespace GoldAPIGateway.BusinessLogics
                 // Check Response
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
                 {
-                    MobileAuth apiResponse = JsonConvert.DeserializeObject<MobileAuth>(response.Content)!;
-                    if (apiResponse != null && apiResponse.Result != null)
+                    MobileAuth GoldAPIResult = JsonConvert.DeserializeObject<MobileAuth>(response.Content)!;
+                    if (GoldAPIResult != null && GoldAPIResult.Result != null)
                     {
-                        UserMobileAuthVM? apiDATA = apiResponse.Result;
+                        UserMobileAuthVM? apiDATA = GoldAPIResult.Result;
                         if (apiDATA != null)
                         {
                             isOk = apiDATA.Validation!.Value
@@ -93,10 +93,10 @@ namespace GoldAPIGateway.BusinessLogics
                 // Check Response
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
                 {
-                    LegalUserAuth apiResponse = JsonConvert.DeserializeObject<LegalUserAuth>(response.Content)!;
-                    if (apiResponse != null && apiResponse.Result != null)
+                    LegalUserAuth GoldAPIResult = JsonConvert.DeserializeObject<LegalUserAuth>(response.Content)!;
+                    if (GoldAPIResult != null && GoldAPIResult.Result != null)
                     {
-                        result = apiResponse.Result;
+                        result = GoldAPIResult.Result;
                     }
                 }
             }
@@ -139,10 +139,10 @@ namespace GoldAPIGateway.BusinessLogics
                 // Check Response
                 if (response.StatusCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.Content))
                 {
-                    RealUserAuth apiResponse = JsonConvert.DeserializeObject<RealUserAuth>(response.Content)!;
-                    if (apiResponse != null && apiResponse.Result != null)
+                    RealUserAuth GoldAPIResult = JsonConvert.DeserializeObject<RealUserAuth>(response.Content)!;
+                    if (GoldAPIResult != null && GoldAPIResult.Result != null)
                     {
-                        RealUserAuthResult? apiDATA = apiResponse.Result;
+                        RealUserAuthResult? apiDATA = GoldAPIResult.Result;
                     }
                 }
             }

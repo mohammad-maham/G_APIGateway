@@ -1,6 +1,6 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
-using GoldAPIGateway.Errors;
 using GoldAPIGateway.Models;
+using GoldHelpers.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -26,9 +26,9 @@ namespace GoldAPIGateway.Controllers
             if (authVM != null && !string.IsNullOrEmpty(authVM.Mobile) && !string.IsNullOrEmpty(authVM.NationalCode))
             {
                 bool isOk = _auth.IsValidateMobileNationalCode(authVM.Mobile, authVM.NationalCode);
-                return Ok(new ApiResponse(data: isOk.ToString().ToLower()));
+                return Ok(new GoldAPIResult(data: isOk.ToString().ToLower()));
             }
-            return BadRequest(new ApiResponse(400));
+            return BadRequest(new GoldAPIResult(400));
         }
 
         [HttpPost]
@@ -38,9 +38,9 @@ namespace GoldAPIGateway.Controllers
             if (infoAuthVM != null)
             {
                 bool isOk = _auth.ValidateRealUserInfo(infoAuthVM);
-                return Ok(new ApiResponse(data: isOk.ToString().ToLower()));
+                return Ok(new GoldAPIResult(data: isOk.ToString().ToLower()));
             }
-            return BadRequest(new ApiResponse(400));
+            return BadRequest(new GoldAPIResult(400));
         }
 
         [HttpPost]
@@ -52,9 +52,9 @@ namespace GoldAPIGateway.Controllers
                 LegalUserAuthResult? result = _auth.ValidateLegalUserInfo(infoAuthVM);
                 string jsonData = JsonConvert.SerializeObject(result);
                 if (result != null && !string.IsNullOrEmpty(result.NationalId))
-                    return Ok(new ApiResponse(data: jsonData));
+                    return Ok(new GoldAPIResult(data: jsonData));
             }
-            return BadRequest(new ApiResponse(400));
+            return BadRequest(new GoldAPIResult(400));
         }
     }
 }

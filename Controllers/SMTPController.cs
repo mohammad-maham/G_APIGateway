@@ -1,6 +1,6 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
-using GoldAPIGateway.Errors;
 using GoldAPIGateway.Models;
+using GoldHelpers.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoldAPIGateway.Controllers
@@ -27,7 +27,7 @@ namespace GoldAPIGateway.Controllers
             {
                 messageId = _smtp.SendOTPSMS(otpSMS.Mobile, otpSMS.OTP);
             }
-            return Ok(new ApiResponse(data: messageId));
+            return Ok(new GoldAPIResult(data: messageId));
         }
 
 
@@ -40,7 +40,7 @@ namespace GoldAPIGateway.Controllers
             {
                 messageIds = _smtp.SendSMS(sms.Mobiles, sms.Message);
             }
-            return Ok(new ApiResponse(data: messageIds));
+            return Ok(new GoldAPIResult(data: messageIds));
         }
     }
 }

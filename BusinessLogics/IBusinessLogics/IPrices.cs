@@ -1,10 +1,10 @@
-﻿namespace GoldAPIGateway.BusinessLogics.IBusinessLogics
+﻿using GoldHelpers.Models;
+
+namespace GoldAPIGateway.BusinessLogics.IBusinessLogics
 {
     public interface IPrices
     {
-        double GetGoldOnlinePrice();
-        double GetSilverOnlinePrice();
-        double GetDollarOnlinePrice();
-        double GetTetherOnlinePrice();
+        double GetOnlineAmount(long amountId);
+        GoldAPIResult? GetOnlineAmountWithDetail(long amountId);
     }
 }

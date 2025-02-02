@@ -1,5 +1,5 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
-using GoldAPIGateway.Errors;
+using GoldHelpers.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GoldAPIGateway.Controllers
@@ -19,34 +19,18 @@ namespace GoldAPIGateway.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult GetGoldOnlinePrice()
+        public IActionResult GetOnlineAmount([FromBody] long amountId)
         {
-            double price = _prices.GetGoldOnlinePrice();
-            return Ok(new ApiResponse(data: price.ToString()));
+            double price = _prices.GetOnlineAmount(amountId);
+            return Ok(new GoldAPIResult(data: price.ToString()));
         }
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult GetDollarOnlinePrice()
+        public IActionResult GetOnlineAmountWithDetail([FromBody] long amountId)
         {
-            double price = _prices.GetGoldOnlinePrice();
-            return Ok(new ApiResponse(data: price.ToString()));
-        }
-
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult GetSilverOnlinePrice()
-        {
-            double price = _prices.GetGoldOnlinePrice();
-            return Ok(new ApiResponse(data: price.ToString()));
-        }
-
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult GetTetherOnlinePrice()
-        {
-            double price = _prices.GetGoldOnlinePrice();
-            return Ok(new ApiResponse(data: price.ToString()));
+            GoldAPIResult? detail = _prices.GetOnlineAmountWithDetail(amountId);
+            return Ok(detail);
         }
     }
 }
