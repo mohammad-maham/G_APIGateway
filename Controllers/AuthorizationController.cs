@@ -1,5 +1,6 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
 using GoldAPIGateway.Models;
+using GoldHelpers.Helpers;
 using GoldHelpers.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -20,6 +21,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult GetValidateMobileNationalCode([FromBody] MobileAuthVM authVM)
         {
@@ -32,6 +34,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult GetValidateRealUserInfo([FromBody] RealUserInfoAuthVM infoAuthVM)
         {
@@ -44,6 +47,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult GetValidateLegalUserInfo([FromBody] LegalUserInfoAuthVM infoAuthVM)
         {

@@ -1,4 +1,5 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
+using GoldHelpers.Helpers;
 using GoldHelpers.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult GetOnlineAmount([FromBody] long amountId)
         {
@@ -26,6 +28,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult GetOnlineAmountWithDetail([FromBody] long amountId)
         {

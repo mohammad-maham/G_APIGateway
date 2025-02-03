@@ -1,5 +1,6 @@
 ﻿using GoldAPIGateway.BusinessLogics.IBusinessLogics;
 using GoldAPIGateway.Models;
+using GoldHelpers.Helpers;
 using GoldHelpers.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult SendOTPSMS([FromBody] OTPsms otpSMS)
         {
@@ -32,6 +34,7 @@ namespace GoldAPIGateway.Controllers
 
 
         [HttpPost]
+        [GoldAuthorize]
         [Route("[action]")]
         public IActionResult SendSMS([FromBody] SMS sms)
         {
