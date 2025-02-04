@@ -20,7 +20,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
-        [GoldAuthorize]
+        //[GoldAuthorize]
         [Route("[action]")]
         public IActionResult SendOTPSMS([FromBody] OTPsms otpSMS)
         {
@@ -34,7 +34,7 @@ namespace GoldAPIGateway.Controllers
 
 
         [HttpPost]
-        [GoldAuthorize]
+        //[GoldAuthorize]
         [Route("[action]")]
         public IActionResult SendSMS([FromBody] SMS sms)
         {

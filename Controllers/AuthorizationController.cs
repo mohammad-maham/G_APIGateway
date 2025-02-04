@@ -21,7 +21,7 @@ namespace GoldAPIGateway.Controllers
         }
 
         [HttpPost]
-        [GoldAuthorize]
+        //[GoldAuthorize]
         [Route("[action]")]
         public IActionResult GetValidateMobileNationalCode([FromBody] MobileAuthVM authVM)
         {
