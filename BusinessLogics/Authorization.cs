@@ -51,7 +51,7 @@ namespace GoldAPIGateway.BusinessLogics
                         UserMobileAuthVM? apiDATA = GoldAPIResult.Result;
                         if (apiDATA != null)
                         {
-                            isOk = apiDATA.Validation!.Value
+                            isOk = apiDATA.Validation.HasValue && apiDATA.Validation.Value
                                 && !string.IsNullOrEmpty(apiDATA.Detail)
                                 && apiDATA.Detail == "شماره موبایل با کد ملی مطابقت دارد";
                         }

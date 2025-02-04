@@ -29,7 +29,7 @@ namespace GoldAPIGateway.Controllers
             {
                 messageId = _smtp.SendOTPSMS(otpSMS.Mobile, otpSMS.OTP);
             }
-            return Ok(new GoldAPIResult(data: messageId));
+            return Ok(new GApiResponse<string>() { Data = messageId });
         }
 
 
@@ -43,7 +43,7 @@ namespace GoldAPIGateway.Controllers
             {
                 messageIds = _smtp.SendSMS(sms.Mobiles, sms.Message);
             }
-            return Ok(new GoldAPIResult(data: messageIds));
+            return Ok(new GApiResponse<string>() { Data = messageIds });
         }
     }
 }

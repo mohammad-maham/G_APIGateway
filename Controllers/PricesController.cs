@@ -24,7 +24,8 @@ namespace GoldAPIGateway.Controllers
         public IActionResult GetOnlineAmount([FromBody] long amountId)
         {
             double price = _prices.GetOnlineAmount(amountId);
-            return Ok(new GoldAPIResult(data: price.ToString()));
+            return Ok(new GApiResponse<string>() { Data = price.ToString() });
+
         }
 
         [HttpPost]
@@ -33,7 +34,7 @@ namespace GoldAPIGateway.Controllers
         public IActionResult GetOnlineAmountWithDetail([FromBody] long amountId)
         {
             GoldAPIResult? detail = _prices.GetOnlineAmountWithDetail(amountId);
-            return Ok(detail);
+            return Ok(new GApiResponse<GoldAPIResult>() { Data = detail });
         }
     }
 }

@@ -28,9 +28,9 @@ namespace GoldAPIGateway.Controllers
             if (authVM != null && !string.IsNullOrEmpty(authVM.Mobile) && !string.IsNullOrEmpty(authVM.NationalCode))
             {
                 bool isOk = _auth.IsValidateMobileNationalCode(authVM.Mobile, authVM.NationalCode);
-                return Ok(new GoldAPIResult(data: isOk.ToString().ToLower()));
+                return Ok(new GApiResponse<string>() { Data = isOk.ToString().ToLower() });
             }
-            return BadRequest(new GoldAPIResult(400));
+            return BadRequest(new GApiResponse<string>() { StatusCode = 400 });
         }
 
         [HttpPost]
@@ -41,9 +41,9 @@ namespace GoldAPIGateway.Controllers
             if (infoAuthVM != null)
             {
                 bool isOk = _auth.ValidateRealUserInfo(infoAuthVM);
-                return Ok(new GoldAPIResult(data: isOk.ToString().ToLower()));
+                return Ok(new GApiResponse<string>() { Data = isOk.ToString().ToLower() });
             }
-            return BadRequest(new GoldAPIResult(400));
+            return BadRequest(new GApiResponse<string>() { StatusCode = 400 });
         }
 
         [HttpPost]
@@ -56,9 +56,9 @@ namespace GoldAPIGateway.Controllers
                 LegalUserAuthResult? result = _auth.ValidateLegalUserInfo(infoAuthVM);
                 string jsonData = JsonConvert.SerializeObject(result);
                 if (result != null && !string.IsNullOrEmpty(result.NationalId))
-                    return Ok(new GoldAPIResult(data: jsonData));
+                    return Ok(new GApiResponse<LegalUserAuthResult>() { Data = result });
             }
-            return BadRequest(new GoldAPIResult(400));
+            return BadRequest(new GApiResponse<string>() { StatusCode = 400 });
         }
     }
 }

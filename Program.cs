@@ -1,6 +1,7 @@
 
 using GoldAPIGateway.BusinessLogics;
 using GoldAPIGateway.BusinessLogics.IBusinessLogics;
+using GoldHelpers.Middleware;
 using Microsoft.OpenApi.Models;
 
 namespace GoldAPIGateway
@@ -48,6 +49,7 @@ namespace GoldAPIGateway
             builder.Services.AddScoped<IPrices, Prices>();
             builder.Services.AddScoped<ISMTP, SMTP>();
             builder.Services.AddScoped<IAuthorization, Authorization>();
+            builder.Services.AddTransient<ExceptionMiddleware>();
 
             WebApplication? app = builder.Build();
 
